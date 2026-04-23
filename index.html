@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Gesture Repetition Lab</title>
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Web Prototype</p>
+          <h1>Gesture Repetition Lab</h1>
+          <p class="hero-copy">
+            先用手势来验证 repetition 逻辑。把单手放到镜头前，连续做
+            <strong>张开手掌 → 握拳 → 张开手掌</strong>，系统会把它计为 1 次。
+            这版会在动作变化率接近 0 的位置提取关键帧，再用关键帧向量余弦相似度确认是否闭环返回。
+          </p>
+        </div>
+        <button id="startButton" class="primary-button">启动摄像头</button>
+      </header>
+
+      <main class="layout">
+        <section class="video-panel card">
+          <div class="video-stack">
+            <video id="webcam" autoplay playsinline muted></video>
+            <canvas id="overlay"></canvas>
+            <div id="statusPill" class="status-pill">模型加载中...</div>
+          </div>
+        </section>
+
+        <section class="sidebar">
+          <article class="card metrics-card">
+            <h2>当前状态</h2>
+            <div class="metric-grid">
+              <div class="metric">
+                <span class="metric-label">已计次数</span>
+                <span id="repCount" class="metric-value rep-count">0</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">重复阶段</span>
+                <span id="phase" class="metric-value">等待张开</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">稳定手势</span>
+                <span id="stableGesture" class="metric-value">-</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">手势置信度</span>
+                <span id="gestureScore" class="metric-value">-</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">回归余弦相似度</span>
+                <span id="cosineSimilarity" class="metric-value">-</span>
+              </div>
+            </div>
+
+            <div class="signal-block">
+              <div class="signal-header">
+                <span>手部开合信号</span>
+                <span id="opennessValue">0.00</span>
+              </div>
+              <div class="progress-track">
+                <div id="opennessBar" class="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="signal-block">
+              <div class="signal-header">
+                <span>动态归一化位置</span>
+                <span id="normalizedValue">0.00</span>
+              </div>
+              <div class="progress-track">
+                <div id="normalizedBar" class="progress-fill accent"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card notes-card">
+            <h2>怎么测</h2>
+            <ol>
+              <li>把一只手完整放进画面里。</li>
+              <li>先保持一个稳定姿态，让系统捕获第一个关键帧。</li>
+              <li>做完整的开合往返，观察局部极值处是否形成关键帧。</li>
+              <li>返回起点后，看余弦相似度是否足够高并只计 1 次。</li>
+              <li>故意抖动或只做半次动作，确认不会误计数。</li>
+            </ol>
+          </article>
+
+          <article class="card log-card">
+            <div class="log-header">
+              <h2>事件日志</h2>
+              <button id="resetButton" class="secondary-button">重置计数</button>
+            </div>
+            <ul id="eventLog" class="event-log"></ul>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
