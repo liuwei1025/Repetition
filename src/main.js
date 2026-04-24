@@ -1,10 +1,9 @@
 import "./style.css";
 import { FilesetResolver, GestureRecognizer } from "@mediapipe/tasks-vision";
 
-const WASM_ROOT =
-  "/vendor/mediapipe/wasm";
-const MODEL_PATH =
-  "/models/gesture_recognizer.task";
+const ASSET_BASE = import.meta.env.BASE_URL;
+const WASM_ROOT = `${ASSET_BASE}vendor/mediapipe/wasm`;
+const MODEL_PATH = `${ASSET_BASE}models/gesture_recognizer.task`;
 
 const HAND_CONNECTIONS = [
   [0, 1], [1, 2], [2, 3], [3, 4],

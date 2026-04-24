@@ -23,6 +23,26 @@ npm run sync:assets
 
 这样开发环境不再依赖 jsDelivr 和 Google Cloud Storage 的实时下载速度。
 
+## GitHub Pages
+
+这个项目已经加好了 GitHub Pages 发布配置。
+
+- 构建时 Vite 的 `base` 会设置为 `/Repetition/`
+- 本地开发时仍然使用根路径 `/`
+- GitHub Actions workflow 位于 `.github/workflows/deploy-pages.yml`
+
+启用方式：
+
+1. 打开 GitHub 仓库的 `Settings -> Pages`
+2. 在 `Build and deployment` 里把 `Source` 设为 `GitHub Actions`
+3. 推送到 `main` 后会自动构建并发布
+
+发布地址预期为：
+
+```text
+https://liuwei1025.github.io/Repetition/
+```
+
 ## 运行
 
 ```bash
