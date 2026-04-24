@@ -2,6 +2,8 @@
 
 这个原型先不做健身动作识别，只验证 `repetition` 计数逻辑。
 
+技术概念、领域边界、插件化方向和后续 DDD/类型编程实现原则见 [Technical Design](docs/TECHNICAL_DESIGN.md)。
+
 当前规则：
 - 输入：浏览器摄像头
 - 感知：MediaPipe Gesture Recognizer
